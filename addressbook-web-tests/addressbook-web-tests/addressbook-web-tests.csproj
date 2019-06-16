@@ -61,12 +61,15 @@
   <ItemGroup>
     <Compile Include="AccountData.cs" />
     <Compile Include="Circle.cs" />
+    <Compile Include="EmailData.cs" />
     <Compile Include="Figure.cs" />
+    <Compile Include="FullName.cs" />
     <Compile Include="GroupData.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GroupCreationTests.cs" />
+    <Compile Include="UnitTest2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
