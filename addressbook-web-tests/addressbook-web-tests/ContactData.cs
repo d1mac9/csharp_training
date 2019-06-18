@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    class FullName
+    class ContactData
     {
         private string firstname;
         private string middlename = "";
         private string lastname;
-        public FullName(string firstname, string lastname) // конструктор
+        public ContactData(string firstname, string lastname) // конструктор
         {
             this.firstname = firstname;
             this.lastname = lastname;
