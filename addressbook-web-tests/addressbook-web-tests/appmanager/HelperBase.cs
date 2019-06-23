@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using NUnit.Framework;
+using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -13,6 +16,8 @@ namespace WebAddressbookTests
     {
         protected ApplicationManager manager;
         protected IWebDriver driver;
+
+        protected bool acceptNextAlert = true;
 
         public HelperBase(ApplicationManager manager)
         {

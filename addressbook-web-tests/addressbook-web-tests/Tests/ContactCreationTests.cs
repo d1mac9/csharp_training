@@ -10,13 +10,13 @@ namespace WebAddressbookTests
     public class ContactCreationTests : TestBase
     {
         [Test]
-        public void ContactCrationTest()
+        public void ContactCreationTest()
         {
-            ContactData firstname = new ContactData("ass","apple");
-            firstname.Middlename = "";
-            firstname.Lastname = "fff";
+            ContactData firstname = new ContactData("pine","apple");
+            //firstname.Middlename = "";
+            //firstname.Lastname = "";
 
-            app.Contact.AddContact(firstname);
+            app.Contact.Create(firstname);
             app.Auth.LogOut();
         }
     }

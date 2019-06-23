@@ -14,6 +14,7 @@ namespace WebAddressbookTests
         protected IWebDriver driver;
         protected string baseURL;
 
+
         protected LoginHelper loginHelper;
         protected NavigationHelper navigator;
         protected GroupHelper groupHelper;
@@ -47,6 +48,7 @@ namespace WebAddressbookTests
             {
                 // Ignore errors if unable to close the browser
             }
+
         }
 
         public LoginHelper Auth

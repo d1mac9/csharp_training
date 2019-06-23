@@ -29,9 +29,9 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.LinkText("add new")).Click();
         }
-        public void SubmitContact()
+        public void GoToContactList()
         {
-            driver.FindElement(By.Name("submit")).Click();
+            driver.FindElement(By.LinkText("home")).Click();
         }
     }
 }
