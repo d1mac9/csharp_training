@@ -90,7 +90,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("update")).Click();
             return this;
         }
-
         public GroupHelper InitGroupModification()
         {
             driver.FindElement(By.Name("edit")).Click();
