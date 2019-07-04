@@ -31,7 +31,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int id)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + id + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (id + 1) + "]")).Click();
             return this;
         }
         public ContactHelper Create(ContactData firstname)
