@@ -21,11 +21,13 @@ namespace WebAddressbookTests
 
             app.Contact.Create(firstname);
 
+            //Assert.AreEqual(oldContacts.Count + 1, app.Contact.GetContactCount());
+
             List<ContactData> newContacts = app.Contact.GetContactList();
             oldContacts.Add(firstname);
             oldContacts.Sort();
             newContacts.Sort();
-            Assert.AreEqual(oldContacts.Count, newContacts.Count);
+            Assert.AreEqual(oldContacts.Count-1, newContacts.Count);
 
         }
     }

@@ -18,17 +18,27 @@ namespace WebAddressbookTests
 
         }
 
+        private List<ContactData> contactCache = null;
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToContactList();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr.odd"));
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                contacts.Add(new ContactData(element.Text));
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToContactList();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr.odd"));
+                foreach (IWebElement element in elements)
+                {
+                    contactCache.Add(new ContactData(element.Text));
+                }
             }
-            return contacts;
+            return new List<ContactData>(contactCache);
         }
+
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.CssSelector("tr.odd")).Count;
+        }
+
         public ContactHelper SubmitContact()
         {
             driver.FindElement(By.Name("submit")).Click();
