@@ -13,18 +13,18 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData firstname = new ContactData("pine");
-            //firstname.Middlename = "";
-            //firstname.Lastname = "";
+            ContactData firstName = new ContactData("pine", "123");
+            //firstName.SecondName = "";
+            //firstName.Lastname = "";
 
             List<ContactData> oldContacts = app.Contact.GetContactList();
 
-            app.Contact.Create(firstname);
+            app.Contact.Create(firstName);
 
             //Assert.AreEqual(oldContacts.Count + 1, app.Contact.GetContactCount());
 
             List<ContactData> newContacts = app.Contact.GetContactList();
-            oldContacts.Add(firstname);
+            oldContacts.Add(firstName);
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts.Count-1, newContacts.Count);
