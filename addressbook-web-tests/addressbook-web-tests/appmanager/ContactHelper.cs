@@ -20,7 +20,7 @@ namespace WebAddressbookTests
 
         private List<ContactData> contactCache = null;
 
-        public ContactData GetContactInformationFromEditForm(int index)
+        public ContactData GetContactInformationFromEditForm(int index, bool indx)
         {
             manager.Navigator.GoToHomePage();
             InitContactModification(0);
@@ -32,12 +32,22 @@ namespace WebAddressbookTests
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
 
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            string allEmails = email + "\r\n" + email2 + "\r\n" + email3;
+
             return new ContactData(firstName, lastName)
             {
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
-                WorkPhone = workPhone
+                WorkPhone = workPhone,
+
+                Email = email,
+                Email2 = email2,
+                Email3 = email3,
             };
 
         }
@@ -49,6 +59,14 @@ namespace WebAddressbookTests
                 .FindElement(By.TagName("a")).Click();
         }
 
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.GoToHomePage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
+        }
+
         public ContactData GetContactInformationFromTable(int index)
         {
             manager.Navigator.GoToHomePage();
@@ -57,12 +75,14 @@ namespace WebAddressbookTests
             string lastName = cells[1].Text;
             string firstName = cells[2].Text;
             string address = cells[3].Text;
-            string allPhones = cells[5].Text;
+            string allEmails = cells[4].Text;
+            string allPhones = cells[5].Text;   
 
             return new ContactData(firstName, lastName)
             {
                 Address = address,
                 AllPhones = allPhones,
+                AllEmails = allEmails,
             };
 
         }
