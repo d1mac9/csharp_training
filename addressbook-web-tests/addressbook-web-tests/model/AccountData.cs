@@ -10,34 +10,21 @@ namespace WebAddressbookTests
     {
         private string username;
         private string password;
-        
-        public AccountData(string username, string password) // конструктор
+
+        public AccountData(string username, string password)
         {
-            this.username = username; // присваиваем значение, которое передано как параметр
+            this.username = username;
             this.password = password;
         }
-        public string Username // свойство
+        public string Username
         {
-            get
-            {
-                return username;
-            }
-            set
-            {
-                username = value;
-            }
+            get { return username; }
+            set { username = value; }
         }
-
-        public string Password // свойство
+        public string Password
         {
-            get // возвращает
-            {
-                return password;
-            }
-            set // присваивает
-            {
-                password = value;
-            }
+            get { return password; }
+            set { password = value; }
         }
     }
 }

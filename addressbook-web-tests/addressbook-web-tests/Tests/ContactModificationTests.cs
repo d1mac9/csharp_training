@@ -1,32 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Threading;
 using NUnit.Framework;
-
+using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
     public class ContactModificationTests : AuthTestBase
     {
         [Test]
-        public void ContactModificationTest()
+        public void TestContactModification()
         {
-            ContactData newData = new ContactData("zzz", "ttt");
-            //newData.SecondName = "ttt";
-
-            List<ContactData> oldContacts = app.Contact.GetContactList();
-
-            app.Contact.Modify(0, newData);
-
-            //Assert.AreEqual(oldContacts.Count, app.Contact.GetContactCount());
-
-            List<ContactData> newContacts = app.Contact.GetContactList();
+            app.Contacts.IsContactExist();
+            ContactData newData = new ContactData("SSS", "ppp");
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            app.Contacts.Modification(0, newData);
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactsCount());
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts[0].LastName = newData.LastName;
             oldContacts[0].FirstName = newData.FirstName;
             oldContacts.Sort();
             newContacts.Sort();
-            Assert.AreEqual(oldContacts.Count, newContacts.Count);
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

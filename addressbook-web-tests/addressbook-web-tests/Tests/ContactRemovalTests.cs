@@ -2,9 +2,8 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Collections.Generic;
 using NUnit.Framework;
-
+using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
@@ -13,20 +12,15 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            List<ContactData> oldContacts = app.Contact.GetContactList();
-
-            app.Contact.Remove(0);
-
-            //Assert.AreEqual(oldContacts.Count - 1, app.Contact.GetContactCount());
-
-            List<ContactData> newContacts = app.Contact.GetContactList();
-
+            app.Contacts.IsContactExist();
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            app.Contacts.Remove(0);
+            Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactsCount());
+            List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.RemoveAt(0);
             oldContacts.Sort();
             newContacts.Sort();
-            Assert.AreEqual(oldContacts.Count + 1, newContacts.Count);
-
-
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

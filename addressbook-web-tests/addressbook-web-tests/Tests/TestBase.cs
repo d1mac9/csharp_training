@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-
 namespace WebAddressbookTests
 {
     public class TestBase
@@ -15,6 +14,7 @@ namespace WebAddressbookTests
         public void SetupApplicationManager()
         {
             app = ApplicationManager.GetInstance();
+            app.Auth.Login(new AccountData("admin", "secret"));
         }
     }
 }

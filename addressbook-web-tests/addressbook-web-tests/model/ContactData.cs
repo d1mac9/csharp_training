@@ -3,21 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        public string allPhones;
-        public string allEmails;
+        private string first_name;
+        private string last_name;
+        private string middle_name = "";
 
-
-        public ContactData(string firstName, string secondName) // конструктор
+        public ContactData(string first_name, string last_name)
         {
-            FirstName = firstName;
-            SecondName = secondName;
+            this.first_name = first_name;
+            this.last_name = last_name;
         }
+        public ContactData(string first_name, string last_name, string middle_name)
+        {
+            this.first_name = first_name;
+            this.last_name = last_name;
+            this.middle_name = middle_name;
+        }
+        public string FirstName
+        {
+            get { return first_name; }
+            set { first_name = value; }
+        }
+
+        public string LastName
+        {
+            get { return last_name; }
+            set { last_name = value; }
+        }
+
+        public int CompareTo(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+            return LastName.CompareTo(other.LastName) + FirstName.CompareTo(other.FirstName);
+        }
+
         public bool Equals(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
@@ -28,94 +54,21 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return FirstName == other.FirstName
-                && SecondName == other.SecondName;
+            if (LastName == other.LastName && FirstName == other.FirstName)
+            {
+                return true;
+            }
+            return false;
         }
+
         public override int GetHashCode()
         {
-            return (FirstName + " " + SecondName).GetHashCode();
+            return LastName.GetHashCode() + FirstName.GetHashCode();
         }
 
         public override string ToString()
         {
-            return "name = " + FirstName;
-        }
-
-        public int CompareTo(ContactData other)
-        {
-            if (Object.ReferenceEquals(other, null))
-
-            {
-                return 1;
-            }
-            return FirstName.CompareTo(other.FirstName);
-        }
-        public string FirstName { get; set; } // св-во
-        public string SecondName { get; set; }
-        public string Address { get; set; }
-        public string HomePhone { get; set; }
-        public string MobilePhone { get; set; }
-        public string WorkPhone { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-
-        public string Email2 { get; set; }
-
-        public string Email3 { get; set; }
-        public string AllEmails
-        {
-            get
-            {
-                if (allEmails != null)
-                {
-                    return allEmails;
-                }
-                else
-                {
-                    return (CleanEm(Email) + CleanEm(Email2) + CleanEm(Email3)).Trim();
-                }
-            }
-            set
-            {
-                allPhones = value;
-            }
-        }
-
-        private string CleanEm(string email)
-        {
-            if (email == null || email == "")
-            {
-                return "";
-            }
-            return email + "\r\n";
-
-        }
-        public string AllPhones
-        {
-            get
-            {
-                if (allPhones != null)
-                {
-                    return allPhones;
-                }
-                else
-                {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
-                }
-            }
-            set
-            {
-                allPhones = value;
-            }
-        }
-
-        private string CleanUp(string phone)
-        {
-            if(phone == null || phone == "")
-            {
-                return "";
-            }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return LastName + FirstName;
         }
     }
 }
