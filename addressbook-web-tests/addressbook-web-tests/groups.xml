@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfGroupData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GroupData>
+    <Name>RHL</Name>
+    <Header>!"0</Header>
+    <Footer>ZQP:JKS</Footer>
+  </GroupData>
+  <GroupData>
+    <Name>NX'</Name>
+    <Header>SX*</Header>
+    <Footer>\SRD.</Footer>
+  </GroupData>
+</ArrayOfGroupData>

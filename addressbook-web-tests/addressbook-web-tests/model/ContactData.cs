@@ -11,6 +11,9 @@ namespace WebAddressbookTests
         private string allPhones;
         private string allContactInformation;
         private string allEmais;
+
+        public ContactData() { }
+
         public ContactData(string first_name, string last_name)
         {
             FirstName = first_name;
@@ -82,46 +85,38 @@ namespace WebAddressbookTests
                         allContactInformation += FirstName;
                     }
                     else FirstName = null;
-
                     if (HomePhone != "")
                     {
                         allContactInformation += " " + LastName;
                     }
                     else HomePhone = null;
-
                     if (HomePhone != "")
                     {
                         allContactInformation += "\r\n\r\n" + "H: " + HomePhone;
                     }
                     else HomePhone = null;
-
                     if (MobilePhone != "")
                     {
                         allContactInformation += "\r\n" + "M: " + MobilePhone;
                     }
                     else MobilePhone = null;
-
                     if (WorkPhone != "")
                     {
                         allContactInformation += "\r\n" + "W: " + WorkPhone;
                     }
                     else WorkPhone = null;
-
                     if (Email1 != null)
                     {
                         allContactInformation += "\r\n\r\n" + Email1;
                     }
-
                     if (Email2 != null)
                     {
                         return allContactInformation += "\r\n" + Email2;
                     }
-
                     if (Email3 != null)
                     {
                         return allContactInformation += "\r\n" + Email3;
                     }
-
                     //return (FirstName + " " + LastName + "\r\n" + "\r\n" + "H:" + HomePhone + "\r\n"
                     // + "M:" + MobilePhone + "\r\n" + "W:" + WorkPhone).Trim();
                     return allContactInformation.Trim();
