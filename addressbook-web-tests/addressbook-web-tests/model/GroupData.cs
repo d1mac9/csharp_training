@@ -12,15 +12,11 @@ namespace WebAddressbookTests
         {
             Name = name;
         }
-
         public string Name { get; set; }
 
         public string Header { get; set; }
-
         public string Footer { get; set; }
-
         public string Id { get; set; }
-
         public int CompareTo(GroupData other)
         {
             if (Object.ReferenceEquals(other, null))
@@ -45,9 +41,10 @@ namespace WebAddressbookTests
         {
             return Name.GetHashCode();
         }
+
         public override string ToString()
         {
-            return "name=" + Name;
+            return "name=" + Name + "\nheader=" + Header + "\nfooter=" + Footer;
         }
     }
 }

@@ -7,15 +7,12 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
-
 namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
         public ContactHelper(ApplicationManager manager) : base(manager)
         { }
-
-
         public ContactHelper Create(ContactData contact)
         {
             AddNewContact();
@@ -57,6 +54,8 @@ namespace WebAddressbookTests
             driver.FindElement(By.CssSelector("img[alt=\"Edit\"]")).Click();
             return this;
         }
+
+
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
@@ -78,13 +77,16 @@ namespace WebAddressbookTests
             Type(By.Name("firstname"), contact.FirstName);
             Type(By.Name("lastname"), contact.LastName);
             return this;
+
         }
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
             contactCache = null;
             return this;
+
         }
+
         public ContactHelper IsContactExist()
         {
             if (!IsElementPresent(By.Name("selected[]")))
@@ -114,7 +116,6 @@ namespace WebAddressbookTests
         {
             return driver.FindElements(By.Name("entry")).Count;
         }
-
         public ContactData GetContactInformationFromTable(int index)
         {
             manager.Navigator.GoToHomePage();
@@ -124,14 +125,12 @@ namespace WebAddressbookTests
             string first_name = cells[2].Text;
             string address = cells[3].Text;
             string allPhones = cells[5].Text;
-
             return new ContactData(first_name, last_name)
             {
                 Address = address,
                 AllPhones = allPhones
             };
         }
-
         public ContactData GetContactInformationFromEditForm(int index)
         {
             manager.Navigator.GoToHomePage();
@@ -142,7 +141,6 @@ namespace WebAddressbookTests
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
-
             return new ContactData(first_name, last_name)
             {
                 Address = address,
@@ -150,6 +148,24 @@ namespace WebAddressbookTests
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone
             };
+        }
+
+        public ContactData GetContactInformationFromDetails(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            OpenContactDetails(0);
+            string allContactInformation = driver.FindElement(By.CssSelector("div[id='content']")).Text;
+
+            return new ContactData(allContactInformation)
+            {
+                AllContactInfo = allContactInformation
+            };
+        }
+
+        public ContactHelper OpenContactDetails(int index)
+        {
+            driver.FindElement(By.CssSelector("img[alt=\"Details\"]")).Click();
+            return this;
         }
     }
 }
