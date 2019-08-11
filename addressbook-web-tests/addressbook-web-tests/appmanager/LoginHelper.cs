@@ -27,20 +27,22 @@ namespace WebAddressbookTests
             Type(By.Name("pass"), account.Password);
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
-
         public bool IsLoggedIn(AccountData account)
         {
             return IsLoggedIn()
-                && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text
-                   == "(" + account.Username + ")";
+                && GetLoggedInUser() == account.Username;
+        }
 
+        private string GetLoggedInUser()
+        {
+            string text = driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
+            return text.Substring(1, text.Length - 2); /*пропускаем первый символ, и последний, так как -2*/
         }
 
         public bool IsLoggedIn()
         {
             return IsElementPresent(By.Name("logout"));
         }
-
         public void Logout()
         {
             if (IsLoggedIn())

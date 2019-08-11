@@ -71,7 +71,6 @@ namespace WebAddressbookTests
             groupCache = null;
             return this;
         }
-
         public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
@@ -83,7 +82,6 @@ namespace WebAddressbookTests
             groupCache = null;
             return this;
         }
-
         public GroupHelper InitGroupModification()
         {
             driver.FindElement(By.Name("edit")).Click();
@@ -100,31 +98,41 @@ namespace WebAddressbookTests
             }
             return this;
         }
-
         private List<GroupData> groupCache = null;
-
         public List<GroupData> GetGroupList()
         {
-                if (groupCache == null)
+            if (groupCache == null)
+            {
+                groupCache = new List<GroupData>();
+                manager.Navigator.GoToGroupsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
                 {
-                    groupCache = new List<GroupData>();
-                    manager.Navigator.GoToGroupsPage();
-                    ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-                    foreach (IWebElement element in elements)
+                    groupCache.Add(new GroupData(null)
                     {
-                        groupCache.Add(new GroupData(element.Text)
-                        {
-                            Id = element.FindElement(By.TagName("input")).GetAttribute("value")
-                        });
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
+                string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
+                string[] parts = allGroupNames.Split('\n');
+                int shift = groupCache.Count - parts.Length;
+                for (int i = 0; i < groupCache.Count; i++)
+                {
+                    if (i < shift)
+                    {
+                        groupCache[i].Name = "";
+                    }
+                    else
+                    {
+                        groupCache[i].Name = parts[i - shift].Trim();
                     }
                 }
+            }
             return new List<GroupData>(groupCache);
         }
-
         public int GetGroupsCount()
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
-
     }
 }
