@@ -8,13 +8,12 @@ using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using System.IO;
-
 namespace WebAddressbookTests
 {
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-        public static IEnumerable<ContactData> RandomGroupDataProvider()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
             List<ContactData> contacts = new List<ContactData>();
             for (int i = 0; i < 5; i++)
@@ -27,7 +26,21 @@ namespace WebAddressbookTests
             }
             return contacts;
         }
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+
+        public static IEnumerable<ContactData> ContactsDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(@"contacts.json"));
+
+        }
+
+        public static IEnumerable<ContactData> ContactsDataFromXmlFile()
+        {
+            return (List<ContactData>)
+                new XmlSerializer(typeof(List<ContactData>))
+                .Deserialize(new StreamReader(@"contacts.xml"));
+        }
+
+        [Test, TestCaseSource("ContactsDataFromXmlFile")]
         public void TestContactCreation(ContactData contact)
         {
             List<ContactData> oldContacts = app.Contacts.GetContactList();
