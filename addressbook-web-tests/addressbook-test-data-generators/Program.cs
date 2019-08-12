@@ -9,7 +9,6 @@ using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Excel = Microsoft.Office.Interop.Excel;
-
 namespace addressbook_tests_data_generators
 {
     class Program
@@ -20,7 +19,6 @@ namespace addressbook_tests_data_generators
             int count = Convert.ToInt32(args[1]);
             string file_name = args[2];
             string format = args[3];
-
             if (data_type == "groups")
             {
                 List<GroupData> groups = new List<GroupData>();
@@ -67,9 +65,9 @@ namespace addressbook_tests_data_generators
                     contacts.Add(new ContactData(TestBase.GenerateRandomString(5), TestBase.GenerateRandomString(5))
                     {
                         Address = TestBase.GenerateRandomString(5),
-                        MobilePhone = Convert.ToString(TestBase.rnd.Next(1111, 9999)),
-                        WorkPhone = Convert.ToString(TestBase.rnd.Next(1111, 9999)),
-                        HomePhone = Convert.ToString(TestBase.rnd.Next(1111, 9999)),
+                        MobilePhone = Convert.ToString(new Random().Next(1111, 9999)),
+                        WorkPhone = Convert.ToString(new Random().Next(1111, 9999)),
+                        HomePhone = Convert.ToString(new Random().Next(1111, 9999)),
                         Email1 = TestBase.GenerateRandomString(5) + "@" + TestBase.GenerateRandomString(5),
                         Email2 = TestBase.GenerateRandomString(5) + "@" + TestBase.GenerateRandomString(5),
                         Email3 = TestBase.GenerateRandomString(5) + "@" + TestBase.GenerateRandomString(5)
@@ -90,25 +88,20 @@ namespace addressbook_tests_data_generators
                 writer.Close();
             }
         }
-
         private static void WriteContactsToJsonFile(List<ContactData> contacts, StreamWriter writer)
         {
             writer.Write(JsonConvert.SerializeObject(contacts, Newtonsoft.Json.Formatting.Indented));
         }
-
         private static void WriteContactsToXmlFile(List<ContactData> contacts, StreamWriter writer)
         {
             new XmlSerializer(typeof(List<ContactData>)).Serialize(writer, contacts);
-
         }
-
         static void WriteGroupsToExcelFile(List<GroupData> groups, string file_name)
         {
             Excel.Application app = new Excel.Application();
             app.Visible = true;
             Excel.Workbook wb = app.Workbooks.Add();
             Excel.Worksheet sheet = wb.ActiveSheet;
-
             int row = 1;
             foreach (GroupData group in groups)
             {
@@ -124,7 +117,6 @@ namespace addressbook_tests_data_generators
             app.Visible = false;
             app.Quit();
         }
-
         static void WriteGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
         {
             foreach (GroupData group in groups)
@@ -133,12 +125,10 @@ namespace addressbook_tests_data_generators
                     group.Name, group.Header, group.Footer));
             }
         }
-
         static void WriteGroupsToXmlFile(List<GroupData> groups, StreamWriter writer)
         {
             new XmlSerializer(typeof(List<GroupData>)).Serialize(writer, groups);
         }
-
         static void WriteGroupsToJsonFile(List<GroupData> groups, StreamWriter writer)
         {
             writer.Write(JsonConvert.SerializeObject(groups, Newtonsoft.Json.Formatting.Indented));

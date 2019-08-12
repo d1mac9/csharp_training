@@ -7,17 +7,17 @@ using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
         [Test]
         public void TestContactModification()
         {
             app.Contacts.IsContactExist();
             ContactData newData = new ContactData("SSS", "ppp");
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
-            app.Contacts.Modification(0, newData);
+            List<ContactData> oldContacts = ContactData.GetAllFromDB();
+            app.Contacts.Modification(oldContacts[0], newData);
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactsCount());
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAllFromDB();
             oldContacts[0].LastName = newData.LastName;
             oldContacts[0].FirstName = newData.FirstName;
             oldContacts.Sort();

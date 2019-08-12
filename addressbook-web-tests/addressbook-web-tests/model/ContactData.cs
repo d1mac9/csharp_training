@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
+
 namespace WebAddressbookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
         private string allContactInformation;
         private string allEmais;
-
         public ContactData() { }
-
         public ContactData(string first_name, string last_name)
         {
             FirstName = first_name;
@@ -23,17 +24,44 @@ namespace WebAddressbookTests
         {
             FirstName = first_name;
         }
+
+        [Column(Name = "firstname")]
         public string FirstName { get; set; }
 
+
+        [Column(Name = "lastname")]
         public string LastName { get; set; }
+
+        [Column(Name = "middlename")]
         public string MiddleName { get; set; }
+
+        [Column(Name = "address")]
         public string Address { get; set; }
+
+        [Column(Name = "mobile")]
         public string MobilePhone { get; set; }
+
+        [Column(Name = "work")]
         public string WorkPhone { get; set; }
+
+        [Column(Name = "home")]
         public string HomePhone { get; set; }
+
+        [Column(Name = "email")]
         public string Email1 { get; set; }
+
+        [Column(Name = "email2")]
         public string Email2 { get; set; }
+
+        [Column(Name = "email3")]
         public string Email3 { get; set; }
+
+        [Column(Name = "id"), PrimaryKey]
+        public string Id { get; set; }
+
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
+
         public string AllPhones
         {
             get
@@ -68,6 +96,30 @@ namespace WebAddressbookTests
             set
             {
                 allEmais = value;
+            }
+        }
+
+        public static List<ContactData> GetAllFromDB()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:0")
+                        select c).ToList(); //запрос в БД списка групп
+
+            }
+        }
+
+        public List<GroupData> GetGroups()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+
+                var query = from g in db.Groups
+                            join t in db.GCR on g.Id equals t.GroupId
+                            where t.ContactId == Id
+                            select g;
+
+                return query.Distinct().ToList();
             }
         }
         public string AllContactInfo

@@ -7,31 +7,27 @@ using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
         [Test]
         public void GroupModificationTest()
         {
             app.Groups.IsGroupExist();
-            GroupData newData = new GroupData("vvv");
-            newData.Header = null;
-            newData.Footer = null;
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-            GroupData oldData = oldGroups[0];
-            app.Groups.Modify(0, newData);
+            GroupData newData = new GroupData("ytx");
+            newData.Header = "hli";
+            newData.Footer = "hlfgh";
+            List<GroupData> oldGroups = GroupData.GetAllFromDB();
+            app.Groups.Modify(oldGroups[8], newData);
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupsCount());
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups[0].Name = newData.Name;
+            List<GroupData> newGroups = GroupData.GetAllFromDB();
+            oldGroups[8].Name = newData.Name;
+            oldGroups[8].Header = newData.Header;
+            oldGroups[8].Footer = newData.Footer;
+            //GroupData.GetAllFromDB()[0].Name = newData.Name;
+
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
-            foreach (GroupData group in newGroups)
-            {
-                if (group.Id == oldData.Id)
-                {
-                    Assert.AreEqual(newData.Name, group.Name);
-                }
-            }
         }
     }
 }
